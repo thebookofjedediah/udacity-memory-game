@@ -24,6 +24,8 @@ let cards = [
 let moveCounter = 0;
 let moves = document.querySelector(".moves");
 let messageContent = document.querySelector(".winner");
+let matchCounter = 0;
+let restart = document.querySelector(".restart");
 
 function initGame() {
   let deck = document.querySelector(".deck");
@@ -51,6 +53,11 @@ function generateCard(card) {
   return `<li class="card" data-card="${card}"><i class="fa ${card}"></i></li>`;
 }
 
+// restarting the game
+restart.addEventListener("click", function(e) {
+  document.location.reload(true);
+});
+
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
   var currentIndex = array.length,
@@ -72,16 +79,8 @@ function shuffle(array) {
 // Get the modal
 var modal = document.getElementById("myModal");
 
-// Get the button that opens the modal
-var btn = document.getElementById("myBtn");
-
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];
-
-// When the user clicks the button, open the modal
-btn.onclick = function() {
-  modal.style.display = "block";
-};
 
 // When the user clicks on <span> (x), close the modal
 span.onclick = function() {
@@ -129,6 +128,7 @@ allCards.forEach(function(card) {
           openCards[1].classList.add("open");
           openCards[1].classList.add("show");
 
+          matchCounter++;
           openCards = [];
         } else {
           setTimeout(function() {
@@ -139,6 +139,9 @@ allCards.forEach(function(card) {
           }, 1000);
         }
         moveCounter++;
+        if (matchCounter == 8) {
+          modal.style.display = "block";
+        }
       }
       moves.innerText = moveCounter;
       messageContent.innerText = `Congratulations!
