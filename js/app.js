@@ -21,9 +21,23 @@ let cards = [
   "fa-bomb"
 ];
 
-function generateCard(card) {
-  return `<li class="card" data-card="${card}"><i class="fa ${card}"></i></li>`;
+let moveCounter = 0;
+let moves = document.querySelector(".moves");
+
+function initGame() {
+  let deck = document.querySelector(".deck");
+  let cardHTML = shuffle(cards).map(function(card) {
+    return generateCard(card);
+  });
+
+  deck.innerHTML = cardHTML.join(" ");
+  moves.innerText = 0;
 }
+
+initGame();
+
+let allCards = document.querySelectorAll(".card");
+let openCards = [];
 
 /*
  * Display the cards on the page
@@ -31,6 +45,10 @@ function generateCard(card) {
  *   - loop through each card and create its HTML
  *   - add each card's HTML to the page
  */
+
+function generateCard(card) {
+  return `<li class="card" data-card="${card}"><i class="fa ${card}"></i></li>`;
+}
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -59,38 +77,6 @@ function shuffle(array) {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
-
-function initGame() {
-  let deck = document.querySelector(".deck");
-  let cardHTML = shuffle(cards).map(function(card) {
-    return generateCard(card);
-  });
-  deck.innerHTML = cardHTML.join(" ");
-}
-
-initGame();
-
-let allCards = document.querySelectorAll(".card");
-let openCards = [];
-
-// make cards flip over (display cards symbol)
-// allCards.forEach(function(card) {
-//   card.addEventListener("click", function(e) {
-//     openCards.push(card);
-//     // hide cards
-//     if (openCards.length >= 2) {
-//       setTimeout(function() {
-//         openCards.forEach(function(card) {
-//           card.classList.remove("open", "show");
-//         });
-//
-//         openCards = [];
-//       }, 1000);
-//     } else {
-//       card.classList.add("open", "show");
-//     }
-//   });
-// });
 
 allCards.forEach(function(card) {
   card.addEventListener("click", function(e) {
@@ -124,7 +110,9 @@ allCards.forEach(function(card) {
             openCards = [];
           }, 1000);
         }
+        moveCounter++;
       }
+      moves.innerText = moveCounter;
     }
   });
 });
