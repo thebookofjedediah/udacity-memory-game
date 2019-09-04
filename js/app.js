@@ -26,15 +26,19 @@ let moves = document.querySelector(".moves");
 let messageContent = document.querySelector(".winner");
 let matchCounter = 0;
 let restart = document.querySelector(".restart");
+let time = 0;
+let timerOn = false;
+let deck = document.querySelector(".deck");
 
 function initGame() {
-  let deck = document.querySelector(".deck");
+  deck;
   let cardHTML = shuffle(cards).map(function(card) {
     return generateCard(card);
   });
 
   deck.innerHTML = cardHTML.join(" ");
   moves.innerText = 0;
+  timerOn;
 }
 
 initGame();
@@ -53,6 +57,20 @@ function generateCard(card) {
   return `<li class="card" data-card="${card}"><i class="fa ${card}"></i></li>`;
 }
 
+// start timer
+deck.addEventListener("click", function() {
+  let timerOn = true;
+  let timer = setInterval(setTime, 1000);
+});
+
+function setTime() {
+  if ((timerOn = true)) {
+    let t = time++;
+    document.getElementById("timer").innerHTML = t;
+  } else {
+    clearInterval(timer);
+  }
+}
 // restarting the game
 restart.addEventListener("click", function(e) {
   document.location.reload(true);
@@ -141,6 +159,7 @@ allCards.forEach(function(card) {
         moveCounter++;
         if (matchCounter == 8) {
           modal.style.display = "block";
+          timerOn = false;
         }
       }
       moves.innerText = moveCounter;
