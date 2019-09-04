@@ -21,6 +21,8 @@ let cards = [
   "fa-bomb"
 ];
 
+let stars = ["fa-star", "fa-star", "fa-star"];
+
 let moveCounter = 0;
 let moves = document.querySelector(".moves");
 let messageContent = document.querySelector(".winner");
@@ -29,6 +31,11 @@ let restart = document.querySelector(".restart");
 let time = 0;
 let timerOn = false;
 let deck = document.querySelector(".deck");
+let score = document.querySelector(".stars");
+
+let starHTML = stars.map(function(star) {
+  return generateStar(star);
+});
 
 function initGame() {
   deck;
@@ -36,6 +43,7 @@ function initGame() {
     return generateCard(card);
   });
 
+  score.innerHTML = starHTML.join(" ");
   deck.innerHTML = cardHTML.join(" ");
   moves.innerText = 0;
   timerOn;
@@ -57,12 +65,16 @@ function generateCard(card) {
   return `<li class="card" data-card="${card}"><i class="fa ${card}"></i></li>`;
 }
 
+function generateStar(star) {
+  return `<li><i class="fa ${star}"></i></li>`;
+}
+
 // start timer
 deck.addEventListener("click", triggerTime);
 
 function triggerTime() {
   let timerOn = true;
-  let timeMe = setInterval(setTime, 1000);
+  timeMe = setInterval(setTime, 1000);
   deck.removeEventListener("click", triggerTime);
 }
 
@@ -75,9 +87,20 @@ function setTime() {
     console.log("should be cleared");
   }
 }
+
 // restarting the game
 restart.addEventListener("click", function(e) {
-  document.location.reload(true);
+  deck;
+  let cardHTML = shuffle(cards).map(function(card) {
+    return generateCard(card);
+  });
+
+  score.innerHTML = starHTML.join(" ");
+  deck.innerHTML = cardHTML.join(" ");
+  moves.innerText = 0;
+  moveCounter = 0;
+  matchCounter = 0;
+  time = 0;
 });
 
 // Shuffle function from http://stackoverflow.com/a/2450976
@@ -116,6 +139,21 @@ window.onclick = function(event) {
   }
 };
 
+// set score
+function setScore() {
+  if (moveCounter > 16) {
+    stars = ["fa-star"];
+  } else if (moveCounter >= 11 && moveCounter <= 16) {
+    stars = ["fa-star", "fa-star"];
+  } else {
+    stars = ["fa-star", "fa-star", "fa-star"];
+  }
+  let starHTML = stars.map(function(star) {
+    return generateStar(star);
+  });
+  score.innerHTML = starHTML.join(" ");
+}
+
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)
@@ -151,6 +189,7 @@ allCards.forEach(function(card) {
           openCards[1].classList.add("show");
 
           matchCounter++;
+          setScore();
           openCards = [];
         } else {
           setTimeout(function() {
@@ -161,15 +200,16 @@ allCards.forEach(function(card) {
           }, 1000);
         }
         moveCounter++;
+        setScore();
         if (matchCounter == 8) {
-          let timerOn = false;
-          console.log("is it false?", timerOn);
+          clearInterval(timeMe);
           modal.style.display = "block";
         }
       }
       moves.innerText = moveCounter;
       messageContent.innerText = `Congratulations!
-      You won in ${moveCounter} moves!`;
+      You won in ${moveCounter} moves.
+      Final Time: ${time} seconds`;
     }
   });
 });
