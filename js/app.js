@@ -58,17 +58,20 @@ function generateCard(card) {
 }
 
 // start timer
-deck.addEventListener("click", function() {
+deck.addEventListener("click", triggerTime);
+
+function triggerTime() {
   let timerOn = true;
   let timer = setInterval(setTime, 1000);
-});
+  deck.removeEventListener("click", triggerTime);
+}
 
 function setTime() {
   if ((timerOn = true)) {
     let t = time++;
     document.getElementById("timer").innerHTML = t;
   } else {
-    clearInterval(timer);
+    clearInterval(setTime);
   }
 }
 // restarting the game
