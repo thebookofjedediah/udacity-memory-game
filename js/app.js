@@ -62,7 +62,7 @@ deck.addEventListener("click", triggerTime);
 
 function triggerTime() {
   let timerOn = true;
-  let timer = setInterval(setTime, 1000);
+  let timeMe = setInterval(setTime, 1000);
   deck.removeEventListener("click", triggerTime);
 }
 
@@ -71,7 +71,8 @@ function setTime() {
     let t = time++;
     document.getElementById("timer").innerHTML = t;
   } else {
-    clearInterval(setTime);
+    clearInterval(timeMe);
+    console.log("should be cleared");
   }
 }
 // restarting the game
@@ -161,8 +162,9 @@ allCards.forEach(function(card) {
         }
         moveCounter++;
         if (matchCounter == 8) {
+          let timerOn = false;
+          console.log("is it false?", timerOn);
           modal.style.display = "block";
-          timerOn = false;
         }
       }
       moves.innerText = moveCounter;
