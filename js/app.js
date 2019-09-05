@@ -50,8 +50,8 @@ function initGame() {
 
 initGame();
 
-let allCards = document.querySelectorAll(".card");
 let openCards = [];
+let allCards = document.querySelectorAll(".card");
 
 /*
  * Display the cards on the page
@@ -90,12 +90,25 @@ function setTime() {
 // restarting the game
 function restartGame() {
   restart.addEventListener("click", function(e) {
-    let cardHTML = shuffle(cards).map(function(card) {
-      return generateCard(card);
-    });
-    deck.innerHTML = cardHTML.join(" ");
+    initGame();
+    // allCards.forEach(function(card) {
+    //   card.classList.remove("show");
+    //   card.classList.remove("open");
+    //   card.classList.remove("add");
+    //   card.classList.remove("match");
+    // });
+
+    // score.innerHTML = starHTML.join(" ");
+    // moves.innerText = 0;
+    // moveCounter = 0;
+    // matchCounter = 0;
+    // time = 0;
+    //
+    // shuffle(cards);
+    // openCards = [];
 
     gameEngine();
+
     console.log("game reset");
   });
 }
@@ -163,7 +176,7 @@ function setScore() {
  */
 
 function gameEngine() {
-  console.log("game set");
+  console.log("this was hit");
   allCards.forEach(function(card) {
     card.addEventListener("click", function(e) {
       if (
