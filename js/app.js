@@ -32,6 +32,7 @@ let time = 0;
 let timerOn = false;
 let deck = document.querySelector(".deck");
 let score = document.querySelector(".stars");
+let play = document.querySelector(".playagain");
 
 let starHTML = stars.map(function(star) {
   return generateStar(star);
@@ -104,6 +105,23 @@ function restartGame() {
   });
 }
 
+//For play again button
+function playAgain() {
+  play.addEventListener("click", function(e) {
+    closeModal();
+    initGame();
+    moveCounter = 0;
+    matchCounter = 0;
+    time = 0;
+    triggerTime();
+    openCards = [];
+
+    gameEngine();
+
+    console.log("game reset");
+  });
+}
+
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
   var currentIndex = array.length,
@@ -139,6 +157,10 @@ window.onclick = function(event) {
     modal.style.display = "none";
   }
 };
+
+function closeModal() {
+  modal.style.display = "none";
+}
 
 // set score
 function setScore() {

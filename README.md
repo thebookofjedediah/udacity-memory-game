@@ -1,20 +1,19 @@
-# Memory Game Project
+# Project Title
 
-## Table of Contents
+Memory Game - Udacity Project 2 FEND
 
-* [Instructions](#instructions)
-* [Contributing](#contributing)
+## Getting Started & Installation
 
-## Instructions
+To get started, clone the repository or download the zip file, then open the index.html in a browser of your choice.
 
-The starter project has some HTML and CSS styling to display a static version of the Memory Game project. You'll need to convert this project from a static project to an interactive one. This will require modifying the HTML and CSS files, but primarily the JavaScript file.
+### Prerequisites
 
-To get started, open `js/app.js` and start building out the app's functionality
-
-For specific, detailed instructions, look at the project instructions in the [Udacity Classroom](https://classroom.udacity.com/me).
+No software is needed to be installed, but the game does use font-awesome fonts.
 
 ## Contributing
 
-This repository is the starter code for _all_ Udacity students. Therefore, we most likely will not accept pull requests.
+Please read [CONTRIBUTING.md](https://github.com/thebookofjedediah/udacity-memory-game/blob/master/CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
 
-For details, check out [CONTRIBUTING.md](CONTRIBUTING.md).
+## Authors
+
+- **Jedediah Arnold** - _Initial work_ - [Udacity](https://www.udacity.com/)
