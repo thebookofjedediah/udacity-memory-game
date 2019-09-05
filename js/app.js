@@ -42,7 +42,6 @@ function initGame() {
   let cardHTML = shuffle(cards).map(function(card) {
     return generateCard(card);
   });
-
   score.innerHTML = starHTML.join(" ");
   deck.innerHTML = cardHTML.join(" ");
   moves.innerText = 0;
@@ -89,19 +88,17 @@ function setTime() {
 }
 
 // restarting the game
-restart.addEventListener("click", function(e) {
-  deck;
-  let cardHTML = shuffle(cards).map(function(card) {
-    return generateCard(card);
-  });
+function restartGame() {
+  restart.addEventListener("click", function(e) {
+    let cardHTML = shuffle(cards).map(function(card) {
+      return generateCard(card);
+    });
+    deck.innerHTML = cardHTML.join(" ");
 
-  score.innerHTML = starHTML.join(" ");
-  deck.innerHTML = cardHTML.join(" ");
-  moves.innerText = 0;
-  moveCounter = 0;
-  matchCounter = 0;
-  time = 0;
-});
+    gameEngine();
+    console.log("game reset");
+  });
+}
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -165,51 +162,56 @@ function setScore() {
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
 
-allCards.forEach(function(card) {
-  card.addEventListener("click", function(e) {
-    if (
-      !card.classList.contains("open") &&
-      !card.classList.contains("show") &&
-      !card.classList.contains("match")
-    ) {
-      // flip cards over
-      openCards.push(card);
-      card.classList.add("open", "show");
-      console.log("Open Cards:", openCards.length);
+function gameEngine() {
+  console.log("game set");
+  allCards.forEach(function(card) {
+    card.addEventListener("click", function(e) {
+      if (
+        !card.classList.contains("open") &&
+        !card.classList.contains("show") &&
+        !card.classList.contains("match")
+      ) {
+        // flip cards over
+        openCards.push(card);
+        card.classList.add("open", "show");
+        console.log("Open Cards:", openCards.length);
 
-      // Unmatched cards flip back
-      if (openCards.length == 2) {
-        if (openCards[0].dataset.card == openCards[1].dataset.card) {
-          openCards[0].classList.add("match");
-          openCards[0].classList.add("open");
-          openCards[0].classList.add("show");
+        // Unmatched cards flip back
+        if (openCards.length == 2) {
+          if (openCards[0].dataset.card == openCards[1].dataset.card) {
+            openCards[0].classList.add("match");
+            openCards[0].classList.add("open");
+            openCards[0].classList.add("show");
 
-          openCards[1].classList.add("match");
-          openCards[1].classList.add("open");
-          openCards[1].classList.add("show");
+            openCards[1].classList.add("match");
+            openCards[1].classList.add("open");
+            openCards[1].classList.add("show");
 
-          matchCounter++;
-          setScore();
-          openCards = [];
-        } else {
-          setTimeout(function() {
-            openCards.forEach(function(card) {
-              card.classList.remove("open", "show");
-            });
+            matchCounter++;
+            setScore();
             openCards = [];
-          }, 1000);
+          } else {
+            setTimeout(function() {
+              openCards.forEach(function(card) {
+                card.classList.remove("open", "show");
+              });
+              openCards = [];
+            }, 1000);
+          }
+          moveCounter++;
+          setScore();
+          if (matchCounter == 8) {
+            clearInterval(timeMe);
+            modal.style.display = "block";
+          }
         }
-        moveCounter++;
-        setScore();
-        if (matchCounter == 8) {
-          clearInterval(timeMe);
-          modal.style.display = "block";
-        }
+        moves.innerText = moveCounter;
+        messageContent.innerText = `Congratulations!
+        You won in ${moveCounter} moves.
+        Final Time: ${time} seconds`;
       }
-      moves.innerText = moveCounter;
-      messageContent.innerText = `Congratulations!
-      You won in ${moveCounter} moves.
-      Final Time: ${time} seconds`;
-    }
+    });
   });
-});
+}
+
+gameEngine();
