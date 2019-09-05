@@ -37,8 +37,9 @@ let starHTML = stars.map(function(star) {
   return generateStar(star);
 });
 
+let allCards;
+
 function initGame() {
-  deck;
   let cardHTML = shuffle(cards).map(function(card) {
     return generateCard(card);
   });
@@ -46,12 +47,12 @@ function initGame() {
   deck.innerHTML = cardHTML.join(" ");
   moves.innerText = 0;
   timerOn;
+  allCards = document.querySelectorAll(".card");
 }
 
 initGame();
 
 let openCards = [];
-let allCards = document.querySelectorAll(".card");
 
 /*
  * Display the cards on the page
@@ -91,21 +92,11 @@ function setTime() {
 function restartGame() {
   restart.addEventListener("click", function(e) {
     initGame();
-    // allCards.forEach(function(card) {
-    //   card.classList.remove("show");
-    //   card.classList.remove("open");
-    //   card.classList.remove("add");
-    //   card.classList.remove("match");
-    // });
+    moveCounter = 0;
+    matchCounter = 0;
+    time = 0;
 
-    // score.innerHTML = starHTML.join(" ");
-    // moves.innerText = 0;
-    // moveCounter = 0;
-    // matchCounter = 0;
-    // time = 0;
-    //
-    // shuffle(cards);
-    // openCards = [];
+    openCards = [];
 
     gameEngine();
 
